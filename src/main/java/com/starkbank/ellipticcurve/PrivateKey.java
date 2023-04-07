@@ -1,8 +1,10 @@
 package com.starkbank.ellipticcurve;
+
 import com.starkbank.ellipticcurve.utils.ByteString;
 import com.starkbank.ellipticcurve.utils.Der;
 import com.starkbank.ellipticcurve.utils.BinaryAscii;
 import com.starkbank.ellipticcurve.utils.RandomInteger;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 
@@ -21,8 +23,7 @@ public class PrivateKey {
     }
 
     /**
-     *
-     * @param curve curve
+     * @param curve  curve
      * @param secret secret
      */
     public PrivateKey(Curve curve, BigInteger secret) {
@@ -30,8 +31,25 @@ public class PrivateKey {
         this.secret = secret;
     }
 
+    public PrivateKey(String type) {
+        switch (type) {
+            case "256k1":
+                this.curve = Curve.secp256k1;
+                this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
+                break;
+            case "384r1":
+                this.curve = Curve.secp384r1;
+                this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
+                break;
+            default:
+                this.curve = Curve.secp256k1;
+                this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
+                break;
+        };
+    }
+
+
     /**
-     *
      * @return PublicKey
      */
     public PublicKey publicKey() {
@@ -41,7 +59,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @return ByteString
      */
     public ByteString toByteString() {
@@ -49,7 +66,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @return ByteString
      */
     public ByteString toDer() {
@@ -62,7 +78,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @return String
      */
     public String toPem() {
@@ -71,7 +86,6 @@ public class PrivateKey {
 
 
     /**
-     *
      * @param string string
      * @return PrivateKey
      */
@@ -81,7 +95,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @param string string
      * @return Privatekey
      */
@@ -90,7 +103,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @param string ByteString
      * @return PrivateKey
      */
@@ -146,9 +158,8 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @param string byteString
-     * @param curve curve
+     * @param curve  curve
      * @return PrivateKey
      */
     public static PrivateKey fromString(ByteString string, Curve curve) {
@@ -156,7 +167,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @param string string
      * @return PrivateKey
      */
@@ -165,7 +175,6 @@ public class PrivateKey {
     }
 
     /**
-     *
      * @param string byteString
      * @return PrivateKey
      */
