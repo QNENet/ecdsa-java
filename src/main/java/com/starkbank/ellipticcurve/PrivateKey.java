@@ -37,6 +37,10 @@ public class PrivateKey {
                 this.curve = Curve.secp256k1;
                 this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
                 break;
+            case "256r1":
+                this.curve = Curve.secp256r1;
+                this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
+                break;
             case "384r1":
                 this.curve = Curve.secp384r1;
                 this.secret = RandomInteger.between(BigInteger.ONE, curve.N);
